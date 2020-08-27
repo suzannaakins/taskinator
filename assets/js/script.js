@@ -181,9 +181,18 @@ var dragTaskHandler = function (event) {
     event.dataTransfer.setData("text/plain", taskId);
     var getId = event.dataTransfer.getData("text/plain");
     console.log("getId:", getId, typeof getId);
-}
+};
+
+var dropZoneDragHandler = function (event) {
+    var taskListEl = event.target.closest(".task-list")
+    if (taskListEl) {
+        event.preventDefault();
+        console.dir(taskListEl);
+    }
+};
 
 formEl.addEventListener("submit", taskFormHandler);
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 pageContentEl.addEventListener("dragstart", dragTaskHandler);
+pageContentEl.addEventListener("dragover", dropZoneDragHandler);
