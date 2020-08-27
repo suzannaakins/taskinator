@@ -180,15 +180,22 @@ var dragTaskHandler = function (event) {
     var taskId = event.target.getAttribute("data-task-id");
     event.dataTransfer.setData("text/plain", taskId);
     var getId = event.dataTransfer.getData("text/plain");
-    console.log("getId:", getId, typeof getId);
 };
 
 var dropZoneDragHandler = function (event) {
     var taskListEl = event.target.closest(".task-list")
     if (taskListEl) {
         event.preventDefault();
-        console.dir(taskListEl);
     }
+};
+
+var dropTaskHandler = function (event) {
+    var id = event.dataTransfer.getData("text/plain");
+    var draggableElement = document.querySelector("[data-task-id='" + id + "']");
+    var dropZoneEl = event.target.closest(".task-list");
+    var statusType = dropZoneEl.id;
+    console.log(statusType);
+    console.dir(dropZoneEl);
 };
 
 formEl.addEventListener("submit", taskFormHandler);
@@ -196,3 +203,4 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 pageContentEl.addEventListener("dragstart", dragTaskHandler);
 pageContentEl.addEventListener("dragover", dropZoneDragHandler);
+pageContentEl.addEventListener("drop", dropTaskHandler);
